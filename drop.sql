@@ -1,0 +1,28 @@
+USE projet;
+
+DROP TABLE IF EXISTS address_model;
+DROP TABLE IF EXISTS apartmentavailability;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS contact_model;
+DROP TABLE IF EXISTS feedbackmodel;
+DROP TABLE IF EXISTS feedbackcategory;
+DROP TABLE IF EXISTS formationavailability;
+DROP TABLE IF EXISTS formation;
+DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS membership;
+DROP TABLE IF EXISTS memorymodel;
+DROP TABLE IF EXISTS memorycategory;
+DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS owner;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS share;
+DROP TABLE IF EXISTS subcategory;
+DROP TABLE IF EXISTS ticket_actions;
+DROP TABLE IF EXISTS ticket_tasks;
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS token;
+DROP TABLE IF EXISTS transaction;
+DROP TABLE IF EXISTS user_profile;
+DROP TABLE IF EXISTS provider;
+DROP TABLE IF EXISTS purchase;
+DROP TABLE IF EXISTS apartment;

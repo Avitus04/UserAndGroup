@@ -9,7 +9,7 @@ public class token {
 //begin of modifiable zone(Javadoc).......C/3604100c-c17c-42cf-8316-574009402ef0
 
 //end of modifiable zone(Javadoc).........E/3604100c-c17c-42cf-8316-574009402ef0
-    public String tokenID;
+    public String token_id;
 
 //begin of modifiable zone(Javadoc).......C/1cd79159-288b-4613-9025-f78bfd9342c5
 
@@ -19,11 +19,11 @@ public class token {
 //begin of modifiable zone(Javadoc).......C/c807f929-f19a-466b-ba01-a65f28fa870e
 
 //end of modifiable zone(Javadoc).........E/c807f929-f19a-466b-ba01-a65f28fa870e
-    public Date date_expired;
+    public Date date_expiration;
 
 //begin of modifiable zone(Javadoc).......C/e1d50a86-de1f-4f5c-934d-8c2d7f7240b8
 
 //end of modifiable zone(Javadoc).........E/e1d50a86-de1f-4f5c-934d-8c2d7f7240b8
-    public boolean bStatusToken;
+    public boolean status_token;
 
 }
