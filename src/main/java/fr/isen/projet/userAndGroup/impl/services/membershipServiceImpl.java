@@ -4,6 +4,8 @@ import fr.isen.projet.userAndGroup.interfaces.models.membership;
 import fr.isen.projet.userAndGroup.interfaces.models.token;
 import fr.isen.projet.userAndGroup.interfaces.services.membershipService;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,23 @@ public class membershipServiceImpl implements membershipService {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/projet";
     private static final String DB_USER = "admin";
     private static final String DB_PASSWORD = "1234";
+
+    @Override
+    public String encrypt(String pwd) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] passwordBytes = pwd.getBytes();
+            byte[] hashedBytes = md.digest(passwordBytes);
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b)); // Conversion en hexadécimal
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public List<membership> getAll() {
@@ -76,6 +95,7 @@ public class membershipServiceImpl implements membershipService {
     public String add(membership data) {
         String query = "INSERT INTO membership (membership_id, address_id, profile_id, token_id, username, passwd, date_created, date_last_connection, status_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        data.passwd = encrypt(data.passwd);
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -113,6 +133,7 @@ public class membershipServiceImpl implements membershipService {
             preparedStatement.setDate(7, new Date(data.date_created.getTime()));
             preparedStatement.setDate(8, new Date(data.date_last_connection.getTime()));
             preparedStatement.setBoolean(9, data.status_user);
+            preparedStatement.setString(10, ID);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0 ? "Membership updated successfully" : "Failed to update membership";

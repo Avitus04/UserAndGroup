@@ -38,4 +38,9 @@ public interface membershipService {
 //end of modifiable zone(Javadoc).........E/05a55c2e-95df-4d52-8fcd-4bfef5c74e8f
     token connection(final String login, final String password);
 
+//begin of modifiable zone(Javadoc).......C/b6797aa7-74a5-4b3b-9fd5-9441665505fb
+
+//end of modifiable zone(Javadoc).........E/b6797aa7-74a5-4b3b-9fd5-9441665505fb
+    String encrypt(final String pwd);
+
 }

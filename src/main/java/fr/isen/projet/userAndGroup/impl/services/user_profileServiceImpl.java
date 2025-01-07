@@ -66,7 +66,20 @@ public class user_profileServiceImpl implements user_profileService {
                     profile = new user_profile();
                     profile.profile_id = resultSet.getString("profile_id");
                     profile.description = resultSet.getString("description");
-                    profile.access_level = access_level.valueOf(resultSet.getString("access_level"));
+                    int access = resultSet.getInt("access_level");
+
+                    if (access == 1)
+                    {
+                        profile.access_level = access_level.ADMIN;
+                    }
+                    else if (access == 2)
+                    {
+                        profile.access_level = access_level.CE;
+                    }
+                    else if (access == 3)
+                    {
+                        profile.access_level = access_level.MEMBER;
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -84,7 +97,20 @@ public class user_profileServiceImpl implements user_profileService {
 
             preparedStatement.setString(1, data.profile_id);
             preparedStatement.setString(2, data.description);
-            preparedStatement.setString(3, data.access_level.name());
+
+            access_level access = data.access_level;
+            if (access == access_level.ADMIN)
+            {
+                preparedStatement.setInt(3, 1);
+            }
+            else if (access == access_level.CE)
+            {
+                preparedStatement.setInt(3, 2);
+            }
+            else if (access == access_level.MEMBER)
+            {
+                preparedStatement.setInt(3, 3);
+            }
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0 ? "User profile added successfully" : "Failed to add user profile";
@@ -103,7 +129,20 @@ public class user_profileServiceImpl implements user_profileService {
 
             preparedStatement.setString(1, data.profile_id);
             preparedStatement.setString(2, data.description);
-            preparedStatement.setString(3, data.access_level.name());
+            access_level access = data.access_level;
+            if (access == access_level.ADMIN)
+            {
+                preparedStatement.setInt(3, 1);
+            }
+            else if (access == access_level.CE)
+            {
+                preparedStatement.setInt(3, 2);
+            }
+            else if (access == access_level.MEMBER)
+            {
+                preparedStatement.setInt(3, 3);
+            }
+            preparedStatement.setString(4, ID);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0 ? "User profile updated successfully" : "Failed to update user profile";
