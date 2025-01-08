@@ -48,8 +48,8 @@ public class membershipServiceImpl implements membershipService {
                 member.username = resultSet.getString("username");
                 member.passwd = resultSet.getString("passwd");
                 member.uuid_address = resultSet.getString("uuid_address");
-                member.date_created = resultSet.getDate("date_created");
-                member.date_last_connection = resultSet.getDate("date_last_connection");
+                member.date_created = resultSet.getTimestamp("date_created");
+                member.date_last_connection = resultSet.getTimestamp("date_last_connection");
                 member.status_user = resultSet.getBoolean("status_user");
                 member.token_id = resultSet.getString("token_id");
                 member.profile_id = resultSet.getString("profile_id");
@@ -78,8 +78,8 @@ public class membershipServiceImpl implements membershipService {
                     member.username = resultSet.getString("username");
                     member.passwd = resultSet.getString("passwd");
                     member.uuid_address = resultSet.getString("uuid_address");
-                    member.date_created = resultSet.getDate("date_created");
-                    member.date_last_connection = resultSet.getDate("date_last_connection");
+                    member.date_created = resultSet.getTimestamp("date_created");
+                    member.date_last_connection = resultSet.getTimestamp("date_last_connection");
                     member.status_user = resultSet.getBoolean("status_user");
                     member.token_id = resultSet.getString("token_id");
                     member.profile_id = resultSet.getString("profile_id");
@@ -105,8 +105,8 @@ public class membershipServiceImpl implements membershipService {
             preparedStatement.setString(4, data.token_id);
             preparedStatement.setString(5, data.username);
             preparedStatement.setString(6, data.passwd);
-            preparedStatement.setDate(7, new Date(data.date_created.getTime()));
-            preparedStatement.setDate(8, new Date(data.date_last_connection.getTime()));
+            preparedStatement.setTimestamp(7, new java.sql.Timestamp(data.date_created.getTime()));
+            preparedStatement.setTimestamp(8, new java.sql.Timestamp(data.date_last_connection.getTime()));
             preparedStatement.setBoolean(9, data.status_user);
 
             int rowsAffected = preparedStatement.executeUpdate();
