@@ -9,7 +9,7 @@ public class membership {
 //begin of modifiable zone(Javadoc).......C/001555f9-5a84-4c60-90b4-78fc63754e6d
 
 //end of modifiable zone(Javadoc).........E/001555f9-5a84-4c60-90b4-78fc63754e6d
-    public String membership_id;
+    public String uuid_user;
 
 //begin of modifiable zone(Javadoc).......C/a4e79948-fc6a-49a6-a92f-870fe709c696
 
@@ -24,7 +24,7 @@ public class membership {
 //begin of modifiable zone(Javadoc).......C/9abd064c-33f2-44c3-9650-5283a4805b5c
 
 //end of modifiable zone(Javadoc).........E/9abd064c-33f2-44c3-9650-5283a4805b5c
-    public String address_id;
+    public String uuid_address;
 
 //begin of modifiable zone(Javadoc).......C/1517e992-d4aa-4cd3-84f5-5defee989823
 

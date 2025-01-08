@@ -44,10 +44,10 @@ public class membershipServiceImpl implements membershipService {
 
             while (resultSet.next()) {
                 membership member = new membership();
-                member.membership_id = resultSet.getString("membership_id");
+                member.uuid_user = resultSet.getString("uuid_user");
                 member.username = resultSet.getString("username");
                 member.passwd = resultSet.getString("passwd");
-                member.address_id = resultSet.getString("address_id");
+                member.uuid_address = resultSet.getString("uuid_address");
                 member.date_created = resultSet.getDate("date_created");
                 member.date_last_connection = resultSet.getDate("date_last_connection");
                 member.status_user = resultSet.getBoolean("status_user");
@@ -74,10 +74,10 @@ public class membershipServiceImpl implements membershipService {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     member = new membership();
-                    member.membership_id = resultSet.getString("membership_id");
+                    member.uuid_user = resultSet.getString("uuid_user");
                     member.username = resultSet.getString("username");
                     member.passwd = resultSet.getString("passwd");
-                    member.address_id = resultSet.getString("address_id");
+                    member.uuid_address = resultSet.getString("uuid_address");
                     member.date_created = resultSet.getDate("date_created");
                     member.date_last_connection = resultSet.getDate("date_last_connection");
                     member.status_user = resultSet.getBoolean("status_user");
@@ -93,14 +93,14 @@ public class membershipServiceImpl implements membershipService {
 
     @Override
     public String add(membership data) {
-        String query = "INSERT INTO membership (membership_id, address_id, profile_id, token_id, username, passwd, date_created, date_last_connection, status_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO membership (uuid_user, uuid_address, profile_id, token_id, username, passwd, date_created, date_last_connection, status_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         data.passwd = encrypt(data.passwd);
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, data.membership_id);
-            preparedStatement.setString(2, data.address_id);
+            preparedStatement.setString(1, data.uuid_user);
+            preparedStatement.setString(2, data.uuid_address);
             preparedStatement.setString(3, data.profile_id);
             preparedStatement.setString(4, data.token_id);
             preparedStatement.setString(5, data.username);
@@ -119,13 +119,13 @@ public class membershipServiceImpl implements membershipService {
 
     @Override
     public String update(String ID, membership data) {
-        String query = "UPDATE membership SET membership_id = ?, address_id = ?, profile_id = ?, token_id = ?, username = ?, passwd = ?, date_created = ?, date_last_connection = ?, status_user = ? WHERE membership_id = ?";
+        String query = "UPDATE membership SET uuid_user = ?, uuid_address = ?, profile_id = ?, token_id = ?, username = ?, passwd = ?, date_created = ?, date_last_connection = ?, status_user = ? WHERE membership_id = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, data.membership_id);
-            preparedStatement.setString(2, data.address_id);
+            preparedStatement.setString(1, data.uuid_user);
+            preparedStatement.setString(2, data.uuid_address);
             preparedStatement.setString(3, data.profile_id);
             preparedStatement.setString(4, data.token_id);
             preparedStatement.setString(5, data.username);
