@@ -65,7 +65,7 @@ public class membershipServiceImpl implements membershipService {
     @Override
     public membership getByID(String ID) {
         membership member = null;
-        String query = "SELECT * FROM membership WHERE uuid_user = ?";
+        String query = "SELECT * FROM membership WHERE username = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -119,7 +119,7 @@ public class membershipServiceImpl implements membershipService {
 
     @Override
     public String update(String ID, membership data) {
-        String query = "UPDATE membership SET uuid_user = ?, uuid_address = ?, profile_id = ?, token_id = ?, username = ?, passwd = ?, date_created = ?, date_last_connection = ?, status_user = ? WHERE uuid_user = ?";
+        String query = "UPDATE membership SET uuid_user = ?, uuid_address = ?, profile_id = ?, token_id = ?, username = ?, passwd = ?, date_created = ?, date_last_connection = ?, status_user = ? WHERE username = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -145,7 +145,7 @@ public class membershipServiceImpl implements membershipService {
 
     @Override
     public String removeByID(String ID) {
-        String query = "DELETE FROM membership WHERE uuid_user = ?";
+        String query = "DELETE FROM membership WHERE username = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

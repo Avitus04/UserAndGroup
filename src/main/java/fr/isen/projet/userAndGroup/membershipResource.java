@@ -5,6 +5,8 @@ import fr.isen.projet.userAndGroup.interfaces.models.membership;
 import fr.isen.projet.userAndGroup.interfaces.services.membershipService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
 
 import java.util.List;
 
@@ -34,20 +36,26 @@ public class membershipResource {
 
     @POST
     @Path("/membership")
-    public String createTicket(membership member) throws Exception {
+    public String create(membership member) throws Exception {
         return this.membershipServ.add(member);
     }
 
     @PUT
     @Path("/membership/{id}")
-    public String updateTicket(@PathParam("id") String Id, membership updatedMember) throws Exception {
+    public String update(@PathParam("id") String Id, membership updatedMember) throws Exception {
         return this.membershipServ.update(Id, updatedMember);
     }
 
     @DELETE
     @Path("/membership/{id}")
-    public String deleteTicket(@PathParam("id") String Id) throws Exception {
+    public String delete(@PathParam("id") String Id) throws Exception {
         return this.membershipServ.removeByID(Id);
+    }
+
+    @POST
+    @Path("/membership/{id}")
+    public Response login( LoginResource.Credentials credentials) throws Exception {
+    return null;
     }
 
 }

@@ -22,7 +22,7 @@ public class user_profileResource {
 
     @GET
     @Path("/user_profile")
-    public List<user_profile> getAllMembers(){
+    public List<user_profile> getAllProfiles(){
         return userProfileService.getAll();
     }
 
@@ -34,19 +34,19 @@ public class user_profileResource {
 
     @POST
     @Path("/user_profile")
-    public String createTicket(user_profile userProfile) throws Exception {
+    public String create(user_profile userProfile) throws Exception {
         return this.userProfileService.add(userProfile);
     }
 
     @PUT
     @Path("/user_profile/{id}")
-    public String updateTicket(@PathParam("id") String Id, user_profile updatedUserProfile) throws Exception {
+    public String update(@PathParam("id") String Id, user_profile updatedUserProfile) throws Exception {
         return this.userProfileService.update(Id, updatedUserProfile);
     }
 
     @DELETE
     @Path("/user_profile/{id}")
-    public String deleteTicket(@PathParam("id") String Id) throws Exception {
+    public String delete(@PathParam("id") String Id) throws Exception {
         return this.userProfileService.removeByID(Id);
     }
 

@@ -23,10 +23,8 @@ public class tokenServiceImpl implements tokenService {
     private static final String DB_USER = "admin";
     private static final String DB_PASSWORD = "1234";
 
-    @GET
-    @Path("/checkToken/{id}")
     @Override
-    public boolean checkToken(@PathParam("id") String token) {
+    public boolean checkToken(String token) {
             String querySelect = "SELECT token_id, date_created, date_expiration, status_token FROM token WHERE token_id = ?";
             String queryUpdateStatus = "UPDATE token SET status_token = ?, date_expiration = ? WHERE token_id = ?";
             String querySetStatusFalse = "UPDATE token SET status_token = ? WHERE token_id = ?";
@@ -105,8 +103,6 @@ public class tokenServiceImpl implements tokenService {
         }
 
 
-    @GET
-    @Path("/tokenCreate")
     @Override
     public token create() {
         token tok = new token();
