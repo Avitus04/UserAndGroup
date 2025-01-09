@@ -50,7 +50,7 @@ public class LoginResource {
 
         else if (passwordBDD != null && passwordBDD.equals(password)) {
 
-            String statusBDD = userService.changeStatus(true, usernameBDD);
+            userService.changeStatus(true, usernameBDD);
 
             // Ajout des utilisateurs dans le MAP
             USERS.put(usernameBDD, passwordBDD);

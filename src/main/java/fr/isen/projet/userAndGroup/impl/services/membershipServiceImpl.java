@@ -107,7 +107,7 @@ public class membershipServiceImpl implements membershipService {
             preparedStatement.setString(6, data.passwd);
             preparedStatement.setTimestamp(7, new java.sql.Timestamp(data.date_created.getTime()));
             preparedStatement.setTimestamp(8, new java.sql.Timestamp(data.date_last_connection.getTime()));
-            preparedStatement.setBoolean(9, data.status_user);
+            preparedStatement.setBoolean(9, false);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0 ? "Membership added successfully" : "Failed to add membership";

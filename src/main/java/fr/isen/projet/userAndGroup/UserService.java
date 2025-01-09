@@ -128,6 +128,32 @@ public class UserService {
         }
     }
 
+    public Boolean getUserStatus(String username) {
+        String query = "SELECT status_user\n" +
+                "FROM membership\n" +
+                "WHERE username = ?;";
+
+
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return  rs.getBoolean("status_user");
+
+            } else {
+                System.out.println("Aucun utilisateur trouve \n");
+                return null; // Aucun utilisateur trouvé
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int setUserToken(String username, String tokenID) {
         String query = "UPDATE membership SET token_id = ? WHERE username = ?";
 
@@ -163,7 +189,7 @@ public class UserService {
         }
     }
 
-    public String changeStatus(boolean status,String username)
+    public void changeStatus(boolean status,String username)
     {
         String query = "UPDATE membership SET status_user = ? WHERE username = ?\n";
         try (Connection conn = DatabaseUtil.getConnection();
@@ -172,11 +198,9 @@ public class UserService {
             stmt.setString(2, username);
             stmt.executeUpdate();;
 
-            return "OK";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error";
         }
     }
 }
