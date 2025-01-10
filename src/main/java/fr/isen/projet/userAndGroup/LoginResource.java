@@ -57,7 +57,7 @@ public class LoginResource {
             //Création d'une instance de la classe RouteBlockingFilter , ce qui permet d'utiliser une de ces fonctions
             RouteBlockingFilter routeBlockingFilter = new RouteBlockingFilter();
             // Change la condition , ce qui permet d'avoir accès aux autres commandes
-            routeBlockingFilter.setConditionMet(true);
+            //routeBlockingFilter.setConditionMet(true);
             userService.changeStatus(true, usernameBDD);
 
             tokenServiceImpl tokenImpl = new tokenServiceImpl();

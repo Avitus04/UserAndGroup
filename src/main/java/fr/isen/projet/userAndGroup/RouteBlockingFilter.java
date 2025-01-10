@@ -21,7 +21,22 @@ public class RouteBlockingFilter implements ContainerRequestFilter {
             return; // Autorise l'accès à cette route
         }
 
-        if (!conditionMet) {
+        if (path.equals("/status") ) {
+            return;
+        }
+
+        if (path.equals("/hello") ) {
+            return;
+        }
+
+        UserService userService = new UserService();
+        RouteBlockingFilter2 routeBlockingFilter2 = new RouteBlockingFilter2();
+        String name = routeBlockingFilter2.keyNameUser();
+        //old if : !conditionMet
+        System.out.println("name user dans filter :" + name);
+        System.out.println("valeur du status dans routeBlockingFilter: " + userService.getUserStatus(name));
+
+        if (userService.getUserStatus(name) == null || !userService.getUserStatus(name)) {
             context.abortWith(Response.status(Response.Status.FORBIDDEN)
                     .entity("{\"message\": \"Action requise avant l'accès à cette ressource.\"}")
                     .build());

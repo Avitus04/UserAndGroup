@@ -113,6 +113,13 @@ public class RouteBlockingFilter2 implements ContainerRequestFilter {
             return; // Autorise l'accès à cette route
         }
 
+        else if (path.equals("/status")) {
+            return; // Autorise l'accès à cette route
+        }
+        else if (path.equals("/hello")) {
+            return; // Autorise l'accès à cette route
+        }
+
         tokenServiceImpl tokenServ = new tokenServiceImpl();
 
         if (!tokenServ.checkToken(userService.getUserToken(name)))
@@ -126,9 +133,7 @@ public class RouteBlockingFilter2 implements ContainerRequestFilter {
             return;
         }
 
-        if (path.equals("/status") && roleBDD.equals("1")) {
-            return; // Autorise l'accès à cette route
-        }
+
 
 
 
