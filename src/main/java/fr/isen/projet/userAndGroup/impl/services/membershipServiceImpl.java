@@ -1,14 +1,21 @@
 package fr.isen.projet.userAndGroup.impl.services;
 
+import fr.isen.projet.userAndGroup.RouteBlockingFilter2;
+import fr.isen.projet.userAndGroup.UserService;
 import fr.isen.projet.userAndGroup.interfaces.models.membership;
 import fr.isen.projet.userAndGroup.interfaces.models.token;
 import fr.isen.projet.userAndGroup.interfaces.services.membershipService;
 
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class membershipServiceImpl implements membershipService {
 
@@ -36,7 +43,7 @@ public class membershipServiceImpl implements membershipService {
     @Override
     public List<membership> getAll() {
         List<membership> memberships = new ArrayList<>();
-        String query = "SELECT * FROM membership";
+        String query = "SELECT * FROM membership;";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              Statement statement = connection.createStatement();
@@ -59,13 +66,14 @@ public class membershipServiceImpl implements membershipService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return memberships;
     }
 
     @Override
     public membership getByID(String ID) {
         membership member = null;
-        String query = "SELECT * FROM membership WHERE username = ?";
+        String query = "SELECT * FROM membership WHERE uuid_user = ?;";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -99,18 +107,29 @@ public class membershipServiceImpl implements membershipService {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, data.uuid_user);
+            String uuid = UUID.randomUUID().toString();
+            preparedStatement.setString(1, uuid);
             preparedStatement.setString(2, data.uuid_address);
             preparedStatement.setString(3, data.profile_id);
-            preparedStatement.setString(4, data.token_id);
+            preparedStatement.setString(4, null);
             preparedStatement.setString(5, data.username);
+            data.passwd = encrypt(data.passwd);
             preparedStatement.setString(6, data.passwd);
-            preparedStatement.setTimestamp(7, new java.sql.Timestamp(data.date_created.getTime()));
-            preparedStatement.setTimestamp(8, new java.sql.Timestamp(data.date_last_connection.getTime()));
+
+            Date dateCurrent = new Date(); // Heure actuelle
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateCurrent);
+            calendar.add(Calendar.HOUR, 1); // Ajouter 1 heure
+            Date datePlusOneHour = calendar.getTime();
+
+            preparedStatement.setTimestamp(7, new Timestamp(datePlusOneHour.getTime()));
+            preparedStatement.setTimestamp(8, null);
             preparedStatement.setBoolean(9, false);
 
+
+
             int rowsAffected = preparedStatement.executeUpdate();
-            return rowsAffected > 0 ? "Membership added successfully" : "Failed to add membership";
+            return rowsAffected > 0 ? "Membership added successfully \nuuid: " + uuid : "Failed to add membership ";
         } catch (SQLException e) {
             e.printStackTrace();
             return "Error: " + e.getMessage();
@@ -119,21 +138,41 @@ public class membershipServiceImpl implements membershipService {
 
     @Override
     public String update(String ID, membership data) {
-        String query = "UPDATE membership SET uuid_user = ?, uuid_address = ?, profile_id = ?, token_id = ?, username = ?, passwd = ?, date_created = ?, date_last_connection = ?, status_user = ? WHERE username = ?";
+        String query = "UPDATE membership SET username = ?, passwd = ?, profile_id = ? WHERE username = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, data.uuid_user);
-            preparedStatement.setString(2, data.uuid_address);
-            preparedStatement.setString(3, data.profile_id);
-            preparedStatement.setString(4, data.token_id);
-            preparedStatement.setString(5, data.username);
-            preparedStatement.setString(6, data.passwd);
-            preparedStatement.setDate(7, new Date(data.date_created.getTime()));
-            preparedStatement.setDate(8, new Date(data.date_last_connection.getTime()));
-            preparedStatement.setBoolean(9, data.status_user);
-            preparedStatement.setString(10, ID);
+            preparedStatement.setString(1, data.username);
+
+            String password = encrypt(data.passwd);
+
+            preparedStatement.setString(2, password);
+            UserService userService = new UserService();
+            RouteBlockingFilter2 routeFilter = new RouteBlockingFilter2();
+            String current_user_role = userService.getUserRole(routeFilter.keyNameUser(), routeFilter.keyPwdUser());
+
+
+            if (data.profile_id != null && current_user_role.equals("1"))
+            {
+                preparedStatement.setString(3, data.profile_id);
+            }
+
+            else if (data.profile_id == null && current_user_role.equals("1"))
+            {
+                preparedStatement.setString(3, "admin");
+            }
+
+            else if (current_user_role.equals("2"))
+            {
+                preparedStatement.setString(3, "CE");
+            }
+            else
+            {
+                    preparedStatement.setString(3, "member");
+            }
+
+            preparedStatement.setString(4, ID);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected > 0 ? "Membership updated successfully" : "Failed to update membership";
@@ -145,7 +184,7 @@ public class membershipServiceImpl implements membershipService {
 
     @Override
     public String removeByID(String ID) {
-        String query = "DELETE FROM membership WHERE username = ?";
+        String query = "DELETE FROM membership WHERE uuid_user = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -158,6 +197,53 @@ public class membershipServiceImpl implements membershipService {
             return "Error: " + e.getMessage();
         }
     }
+
+
+    public String showAddress()
+    {
+        try {
+            String apiUrl = "http://localhost:8083/addresses";
+            return callExternalAPI(apiUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
+
+    private String callExternalAPI(String apiUrl) throws IOException {
+        // Créer l'objet URL
+        URL url = new URL(apiUrl);
+
+        // Ouvrir la connexion HTTP
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        // Configurer la méthode en GET
+        connection.setRequestMethod("GET");
+
+        // Obtenir le code de réponse
+        int responseCode = connection.getResponseCode();
+
+        // Vérifier si le code de réponse est un succès (200-299)
+        if (responseCode < 200 || responseCode > 299) {
+            throw new RuntimeException("Échec de l'appel à l'API externe : " + apiUrl + " (Code : " + responseCode + ")");
+        }
+
+        // Lire et retourner la réponse
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return response.toString();
+        } finally {
+            // Fermer la connexion
+            connection.disconnect();
+        }
+    }
+
 
     @Override
     public token connection(String login, String password) {

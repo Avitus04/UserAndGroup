@@ -60,7 +60,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8082/membership/admin",
+					"raw": "http://localhost:8082/membership/2fd1986f-f32a-4b1a-a095-9afc523d19a0",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -68,7 +68,7 @@
 					"port": "8082",
 					"path": [
 						"membership",
-						"admin"
+						"2fd1986f-f32a-4b1a-a095-9afc523d19a0"
 					]
 				}
 			},
@@ -81,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"uuid_user\": \"2fd1986f-f32a-4b1a-a095-9afc523d1927\",\r\n    \"username\": \"admin2\",\r\n    \"passwd\": \"21232f297a57a5a743894a0e4a801fc3\",\r\n    \"uuid_address\": \"d5cb19a7-d3b3-4c28-b604-dac8cc7f4412\",\r\n    \"date_created\": \"2023-03-02T08:21:53.000+00:00\",\r\n    \"date_last_connection\": \"2025-01-08T22:02:08.000+00:00\",\r\n    \"status_user\": false,\r\n    \"token_id\": \"6e0d12f769245e3d4cd9e4b1c484db4bdebac7ba998299e3890f211f09c31885\",\r\n    \"profile_id\": \"admin\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin2\",\r\n    \"passwd\": \"admin2\",\r\n    \"uuid_address\": \"d5cb19a7-d3b3-4c28-b604-dac8cc7f4412\",\r\n    \"profile_id\": \"member\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,7 +109,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"uuid_user\": \"2fd1986f-f32a-4b1a-a095-9afc523d1927\",\r\n    \"username\": \"admin2\",\r\n    \"passwd\": \"21232f297a57a5a743894a0e4a801fc3\",\r\n    \"uuid_address\": \"d5cb19a7-d3b3-4c28-b604-dac8cc7f4412\",\r\n    \"date_created\": \"2024-05-02T08:21:53.000+00:00\",\r\n    \"date_last_connection\": \"2025-01-08T22:02:08.000+00:00\",\r\n    \"status_user\": false,\r\n    \"token_id\": \"6e0d12f769245e3d4cd9e4b1c484db4bdebac7ba998299e3890f211f09c31885\",\r\n    \"profile_id\": \"admin\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin2\",\r\n    \"passwd\": \"admin2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -137,7 +137,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8082/membership/admin2",
+					"raw": "http://localhost:8082/membership/021a3101-de8e-4946-a1e3-0556e1e0d4f3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -145,7 +145,29 @@
 					"port": "8082",
 					"path": [
 						"membership",
-						"admin2"
+						"021a3101-de8e-4946-a1e3-0556e1e0d4f3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "status",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"status"
 					]
 				}
 			},

@@ -43,4 +43,5 @@ public interface membershipService {
 //end of modifiable zone(Javadoc).........E/b6797aa7-74a5-4b3b-9fd5-9441665505fb
     String encrypt(final String pwd);
 
+    String showAddress();
 }

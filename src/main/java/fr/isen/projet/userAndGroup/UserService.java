@@ -45,17 +45,16 @@ public class UserService {
             return null;
         }
     }
-    public String getUserName(String username, String passwd) {
+    public String getUserName(String username) {
         String query = "SELECT username\n" +
                 "FROM membership\n" +
-                "WHERE username = ? AND passwd = ? ;";
+                "WHERE username = ?;";
 
 
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, username);
-            stmt.setString(2, passwd);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -72,17 +71,16 @@ public class UserService {
     }
 
 
-    public String getUserPassword(String username, String passwd) {
+    public String getUserPassword(String username) {
         String query = "SELECT passwd\n" +
                 "FROM membership\n" +
-                "WHERE username = ? AND passwd = ? ;";
+                "WHERE username = ?;";
 
 
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, username);
-            stmt.setString(2, passwd);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
@@ -128,6 +126,38 @@ public class UserService {
         }
     }
 
+    public String getUuid_user()
+    {
+        String query = "SELECT uuid_user\n" +
+                "FROM membership\n" +
+                "WHERE username = ?;";
+
+
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            RouteBlockingFilter2 routeBlock = new RouteBlockingFilter2();
+
+
+            stmt.setString(1, routeBlock.keyNameUser());
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String uuid = rs.getString("uuid_user");
+                return uuid;
+
+            } else {
+                System.out.println("Aucun utilisateur trouve \n");
+                return null; // Aucun utilisateur trouvé
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public Boolean getUserStatus(String username) {
         String query = "SELECT status_user\n" +
                 "FROM membership\n" +
@@ -171,6 +201,7 @@ public class UserService {
             return 0;
         }
     }
+
 
     public int setUserLastConnection(String username, Date dateLastConnection) {
         String query = "UPDATE membership SET date_last_connection = ? WHERE username = ?";

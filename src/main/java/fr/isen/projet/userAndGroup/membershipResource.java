@@ -3,9 +3,11 @@ package fr.isen.projet.userAndGroup;
 import fr.isen.projet.userAndGroup.impl.services.membershipServiceImpl;
 import fr.isen.projet.userAndGroup.interfaces.models.membership;
 import fr.isen.projet.userAndGroup.interfaces.services.membershipService;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 
 import java.util.List;
@@ -26,6 +28,12 @@ public class membershipResource {
     @Path("/membership")
     public List<membership> getAllMembers(){
         return membershipServ.getAll();
+    }
+
+    @GET
+    @Path("/address")
+    public String getAllAddress(){
+        return membershipServ.showAddress();
     }
 
     @GET

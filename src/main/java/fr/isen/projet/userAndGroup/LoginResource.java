@@ -34,11 +34,9 @@ public class LoginResource {
         UserService userService = new UserService();
         String roleBDD = userService.getUserRole(username, password);
 
-
-        String usernameBDD = userService.getUserName(username, password);
-        String passwordBDD = userService.getUserPassword(username, password);
+        String usernameBDD = userService.getUserName(username);
+        String passwordBDD = userService.getUserPassword(username);
         System.out.println("access : \n"+ roleBDD); //test debug
-
 
 
         if (username == null || password == null) {
@@ -50,14 +48,17 @@ public class LoginResource {
 
         else if (passwordBDD != null && passwordBDD.equals(password)) {
 
-            userService.changeStatus(true, usernameBDD);
-
+            RouteBlockingFilter2 routeBlockingFilter2 = new RouteBlockingFilter2();
+            String name = routeBlockingFilter2.keyNameUser();
+            userService.changeStatus(false, name);
+            USERS.clear();
             // Ajout des utilisateurs dans le MAP
             USERS.put(usernameBDD, passwordBDD);
             //Création d'une instance de la classe RouteBlockingFilter , ce qui permet d'utiliser une de ces fonctions
             RouteBlockingFilter routeBlockingFilter = new RouteBlockingFilter();
             // Change la condition , ce qui permet d'avoir accès aux autres commandes
             routeBlockingFilter.setConditionMet(true);
+            userService.changeStatus(true, usernameBDD);
 
             tokenServiceImpl tokenImpl = new tokenServiceImpl();
             token tok = tokenImpl.create();
@@ -69,8 +70,9 @@ public class LoginResource {
 
             if (result == 0) {return Response.notModified().build();}
 
-            return Response.ok(Map.of("message", "Connexion réussie", "username", username)).build();
+            return Response.ok(Map.of("message", "Connexion réussie", "username", username, "uuid", userService.getUuid_user())).build();
         } else {
+            System.out.println("password : "+ passwordBDD);
             return Response.status(Response.Status.UNAUTHORIZED)
                     .entity(Map.of("message", "Nom d'utilisateur ou mot de passe incorrect"))
                     .build();

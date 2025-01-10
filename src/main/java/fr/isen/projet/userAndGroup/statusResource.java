@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Path("/status")
 public class statusResource {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/user_and_group"; // URL de la base
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/projet"; // URL de la base
     private static final String DB_USER = "admin"; // Nom d'utilisateur
     private static final String DB_PASSWORD = "1234"; // Mot de passe
 
@@ -48,11 +48,10 @@ public class statusResource {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
             // Récupérer la liste des tables
-            try (Statement tableStatement = connection.createStatement();
-                 ResultSet tables = tableStatement.executeQuery("SHOW TABLES")) {
+                String tables[] = new String[]{"membership", "user_profile", "token"};
 
-                while (tables.next()) {
-                    String tableName = tables.getString(1);
+                for (int i = 0; i < 3; i++) {
+                    String tableName = tables[i];
 
                     // Effectuer un COUNT() pour chaque table avec une nouvelle instance de Statement
                     try (Statement countStatement = connection.createStatement();
@@ -65,7 +64,6 @@ public class statusResource {
                         System.err.println("Erreur lors du comptage pour la table " + tableName + ": " + e.getMessage());
                     }
                 }
-            }
         } catch (Exception e) {
             System.err.println("Erreur lors de la connexion ou de l'exécution de la requête : " + e.getMessage());
             throw e;
