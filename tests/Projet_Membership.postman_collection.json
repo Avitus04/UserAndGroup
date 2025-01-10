@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "22fc5659-be32-4299-989f-d8ec791eff20",
+		"name": "Projet_Membership",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31183509"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllMembers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/membership",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"membership"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getByID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/membership/2fd1986f-f32a-4b1a-a095-9afc523d19a0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"membership",
+						"2fd1986f-f32a-4b1a-a095-9afc523d19a0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin2\",\r\n    \"passwd\": \"admin2\",\r\n    \"uuid_address\": \"d5cb19a7-d3b3-4c28-b604-dac8cc7f4412\",\r\n    \"profile_id\": \"member\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/membership",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"membership"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin210\",\r\n    \"passwd\": \"admin210\",\r\n    \"profile_id\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/membership/admin2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"membership",
+						"admin2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeByID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/membership/687a6d36-dfec-4c91-8fec-10008e78d7fb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"membership",
+						"687a6d36-dfec-4c91-8fec-10008e78d7fb"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "status",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
