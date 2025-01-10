@@ -1,7 +1,7 @@
 package fr.isen.projet.userAndGroup.impl.services;
 
 
-import fr.isen.projet.userAndGroup.interfaces.enums.access_level;
+import fr.isen.projet.userAndGroup.interfaces.enums.ACCESS_LEVEL;
 import fr.isen.projet.userAndGroup.interfaces.models.user_profile;
 import fr.isen.projet.userAndGroup.interfaces.services.user_profileService;
 
@@ -33,15 +33,15 @@ public class user_profileServiceImpl implements user_profileService {
 
                 if (access == 1)
                 {
-                    profile.access_level = access_level.ADMIN;
+                    profile.access_level = ACCESS_LEVEL.ADMIN;
                 }
                 else if (access == 2)
                 {
-                    profile.access_level = access_level.CE;
+                    profile.access_level = ACCESS_LEVEL.CE;
                 }
                 else if (access == 3)
                 {
-                    profile.access_level = access_level.MEMBER;
+                    profile.access_level = ACCESS_LEVEL.MEMBER;
                 }
                 userProfiles.add(profile);
             }
@@ -70,15 +70,15 @@ public class user_profileServiceImpl implements user_profileService {
 
                     if (access == 1)
                     {
-                        profile.access_level = access_level.ADMIN;
+                        profile.access_level = ACCESS_LEVEL.ADMIN;
                     }
                     else if (access == 2)
                     {
-                        profile.access_level = access_level.CE;
+                        profile.access_level = ACCESS_LEVEL.CE;
                     }
                     else if (access == 3)
                     {
-                        profile.access_level = access_level.MEMBER;
+                        profile.access_level = ACCESS_LEVEL.MEMBER;
                     }
                 }
             }
@@ -98,16 +98,16 @@ public class user_profileServiceImpl implements user_profileService {
             preparedStatement.setString(1, data.profile_id);
             preparedStatement.setString(2, data.description);
 
-            access_level access = data.access_level;
-            if (access == access_level.ADMIN)
+            ACCESS_LEVEL access = data.access_level;
+            if (access == ACCESS_LEVEL.ADMIN)
             {
                 preparedStatement.setInt(3, 1);
             }
-            else if (access == access_level.CE)
+            else if (access == ACCESS_LEVEL.CE)
             {
                 preparedStatement.setInt(3, 2);
             }
-            else if (access == access_level.MEMBER)
+            else if (access == ACCESS_LEVEL.MEMBER)
             {
                 preparedStatement.setInt(3, 3);
             }
@@ -129,16 +129,16 @@ public class user_profileServiceImpl implements user_profileService {
 
             preparedStatement.setString(1, data.profile_id);
             preparedStatement.setString(2, data.description);
-            access_level access = data.access_level;
-            if (access == access_level.ADMIN)
+            ACCESS_LEVEL access = data.access_level;
+            if (access == ACCESS_LEVEL.ADMIN)
             {
                 preparedStatement.setInt(3, 1);
             }
-            else if (access == access_level.CE)
+            else if (access == ACCESS_LEVEL.CE)
             {
                 preparedStatement.setInt(3, 2);
             }
-            else if (access == access_level.MEMBER)
+            else if (access == ACCESS_LEVEL.MEMBER)
             {
                 preparedStatement.setInt(3, 3);
             }

@@ -1,6 +1,6 @@
 package fr.isen.projet.userAndGroup.interfaces.models;
 
-import fr.isen.projet.userAndGroup.interfaces.enums.access_level;
+import fr.isen.projet.userAndGroup.interfaces.enums.ACCESS_LEVEL;
 
 //begin of modifiable zone(Javadoc).......C/ff2904cf-3467-4b8b-8cd6-2440ee3f0549
 
@@ -19,6 +19,6 @@ public class user_profile {
 //begin of modifiable zone(Javadoc).......C/da370277-408b-41b8-b2d2-aee0dae0fba3
 
 //end of modifiable zone(Javadoc).........E/da370277-408b-41b8-b2d2-aee0dae0fba3
-    public access_level access_level;
+    public ACCESS_LEVEL access_level;
 
 }
